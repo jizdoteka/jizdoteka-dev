@@ -19,6 +19,9 @@ class JourneyDetail(DetailView):
         passangers = {}
 
         class Passanger(object):
+            """
+                docstring for Passanger
+            """
             start = None
             _length = 0
             _rest = 0
@@ -26,6 +29,7 @@ class JourneyDetail(DetailView):
             user = None
 
             def __init__(self, start, user, sum):
+                super(Passanger, self).__init__()
                 self.start = start
                 self.user = user
                 self._sum = sum
