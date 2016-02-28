@@ -18,6 +18,7 @@ def logout_user(request):
     logout(request)
     return HttpResponseRedirect('../../')
 
+
 class LoginScreen(View):
     user_name = None
     user_pass = None
@@ -45,6 +46,7 @@ class LoginScreen(View):
             self.user = authenticate(username = self.user_name, password = self.user_pass)
         else:
             return HttpResponse("MISSING CREDENTIALS!")
+
 
 class RegisterScreen(View):
     user_mail = None
@@ -81,10 +83,30 @@ class RegisterScreen(View):
         if self.correct_day == self.asked_day:
             self.question_ok = True
 
+
+class CarManagement(View):
+    car_name = None
+    car_color = None
+
+    car_air_conditioning = False
+    car_animals_allowed = False
+    car_has_wifi = False
+    car_has_highway_sign = False
+    car_smoking_allowed = False
+
+    car_register_sign = None
+
+    car_form = forms.CarManageForm()
+    car_list = ["ASFA", "SDFSD"]
+
+    def get(self, request):
+        return render(request, 'web/car_mgmt.html', {"form": self.car_form, "car_list": self.car_list})
+
 #@login_required
 #def user_mgmt(request):
 #    manage_form = forms.ManageForm()
 #    return render(request, 'web/user_mgmt.html', {"form": manage_form})
+
 
 class JourneyList(ListView):
     model = models.Journey
