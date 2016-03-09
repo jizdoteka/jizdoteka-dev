@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="prechod">
+
+  <a href="{% url 'login_screen' %}">Login</a>
+  <a href="{% url 'logout_user' %}">Logout</a>
+  <a href="{% url 'register' %}">Register</a>
+  <a href="{% url 'user' %}">User Management</a>
+  <a href="{% url 'cars' %}">Cars</a>
+
+</div>
+<div id="stranka">{{ request.user.email }}
+</div>
+
+{% endblock content %}

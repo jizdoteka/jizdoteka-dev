@@ -5,7 +5,38 @@ from django.utils import timezone
 from django.db import models
 from django.conf import settings
 from django.db.models import signals
+
+
+from django.contrib.auth.hashers import check_password
+#from django.contrib.gis.db import models as gis_models
+
 from django.contrib.auth.models import User
+
+
+class Vehicle(models.Model):
+    name = models.CharField(max_length=20, blank=False)
+    owner = models.ForeignKey(User)
+    register = models.CharField(max_length=20, blank = True, default = None)
+    color = models.CharField(max_length=10, blank=False)
+
+    wifi_on_board = models.BooleanField(default=False)
+    animals_allowed = models.BooleanField(default=False)
+    highway_mark = models.BooleanField(default=False)
+    smoking_allowed = models.BooleanField(default=False)
+    air_conditioning = models.BooleanField(default=False)
+
+    def __str__(self):
+        ret_str = "Vehicle basic attrs:\n\
+                name: %s, register: %s, \
+                color: %s\, owner_id: %s, \
+                wifi_on_board: %s, animals_allowed: %s, \
+                highway_mark: %s\nsmoking_allowed: %s, \
+                air_conditioning: %s" % (self.name, self.register,
+                                         self.color, self.owner.id,
+                                         self.wifi_on_board, self.animals_allowed,
+                                         self.highway_mark,self.smoking_allowed,
+                                         self.air_conditioning)
+        return ret_str
 
 
 class UserProfile(models.Model):
@@ -21,7 +52,7 @@ class UserProfile(models.Model):
     drive_years = models.IntegerField(blank=True, default=0)
 
     def __str__(self):
-        return self.user.username
+        return self.user.email
 
 
 def create_user_profile(sender, instance, created, **kwargs):

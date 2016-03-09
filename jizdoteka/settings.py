@@ -40,6 +40,14 @@ INSTALLED_APPS = [
     # 'django.contrib.gis',
     'debug_toolbar',
     'apps.web',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'emailusernames',
+
+    # Facebook
+    'allauth.socialaccount.providers.facebook',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -66,6 +74,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # Required by allauth template tags
+                "django.core.context_processors.request",
+                # allauth specific context processors
             ],
             'libraries': {
                 # TODO: ugly hack! Figure out how to load templatetags properly
@@ -87,6 +98,14 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+AUTHENTICATION_BACKENDS = (
+    # Uncomment the following to make Django tests pass:
+    'emailusernames.backends.EmailAuthBackend',
+    #'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 
 # Password validation

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, TemplateView, RedirectView, CreateView, UpdateView
 from django.views.generic.edit import FormView
+
 from .. import models
 from .. import forms
 import googlemaps
@@ -15,12 +16,27 @@ from django import forms as dj_forms
 # Create your views here.
 # Google API key:  AIzaSyAen5jtHmdJ5ZW3ZOCoqDVjZLkDlILJ014
 
+from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView, TemplateView, RedirectView, View
+from pprint import pprint
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from emailusernames.utils import create_user
+
+
+from django.http import HttpResponse, HttpResponseRedirect
+
+## Import forms
+from .. import forms
+
 
 class WaypointNotFound(Exception):
     pass
 
 
 class JourneyList(ListView, FormView):
+
     model = models.Journey
     form_class = forms.SearchJourney
     success_url = '/'   # TODO: replace by generic URL of this page
@@ -169,6 +185,7 @@ class JourneyDetail(DetailView):
 
 class UserDetail(DetailView):
     model = models.User
+
 
 # http://kevindias.com/writing/django-class-based-views-multiple-inline-formsets/
 class JourneyCreate(CreateView):
